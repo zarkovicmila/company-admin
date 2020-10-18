@@ -1,0 +1,12 @@
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1>Companies</h1><br><br>
+  
+    {{#each companies as |company|}}
+    {{#link-to 'employees' company.id}}
+        <h3>{{company.name}}</h3>
+    {{/link-to}}    
+    {{/each}}
+    
+    </div>
+</section>

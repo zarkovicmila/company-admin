@@ -1,0 +1,18 @@
+.footer{
+    margin-top: 450px;
+}
+
+.error{
+    color: red;
+}
+
+.required-info{
+    color: darkgrey;
+}
+
+@media screen and (max-width: 991px) {
+    .employee-btn {
+        margin: 2px;
+        size: 15px;
+    }  
+}

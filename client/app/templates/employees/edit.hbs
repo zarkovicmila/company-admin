@@ -1,0 +1,83 @@
+<h2 class="pt-5 pb-2">Employee</h2>	
+<form id="edit-employee-form">
+	<div class="form-group">
+		<label>Name:</label>		
+		{{#if (eq action "view")}}  
+		{{input type="text" class="form-control" readonly="true" value=employee.name placeholder="Name"}}
+		{{else}}
+		{{input type="text" class="form-control" value=employee.name placeholder="Name"}}
+		{{/if}}
+		{{#if (v-get employee 'name' 'isInvalid')}}
+		<div class="error">
+			{{v-get employee 'name' 'message'}} 
+		</div>
+		{{/if}}
+	</div>
+    <div class="form-group">
+		<label>Surname:</label>
+		{{#if (eq action "view")}} 
+		{{input type="text" class="form-control" readonly="true" value=employee.surname placeholder="Surname"}}
+		{{else}}
+		{{input type="text" class="form-control" value=employee.surname placeholder="Surname"}}
+		{{/if}}
+		{{#if (v-get employee 'surname' 'isInvalid')}}
+		<div class="error">
+			{{v-get employee 'surname' 'message'}} 
+		</div>
+		{{/if}}
+	</div>
+    <div class="form-group">
+		<label>Address:</label>
+		{{#if (eq action "view")}}
+		{{input type="text" class="form-control" readonly="true" value=employee.address placeholder="Address"}}
+		{{else}}
+		{{input type="text" class="form-control" value=employee.address placeholder="Address"}}
+		{{/if}}
+	</div>
+    <div class="form-group">
+		<label>Email:</label>
+		{{#if (eq action "view")}}
+		{{input type="text" class="form-control" readonly="true" value=employee.email placeholder="Email"}}
+		{{else}}
+		{{input type="text" class="form-control" value=employee.email placeholder="Email"}}
+		{{/if}}
+		{{#if (v-get employee 'email' 'isInvalid')}}
+		<div class="error">
+			{{v-get employee 'email' 'message'}} 
+		</div>
+		{{/if}}
+	</div>
+	<div class="form-group">
+		<label>Salary:</label>
+		{{#if (eq action "view")}}
+		{{input type="text" class="form-control" readonly="true" value=employee.salary placeholder="Salary"}}
+		{{else}}
+		{{input type="text" class="form-control" value=employee.salary placeholder="Salary"}}
+		{{/if}}
+		{{#if (v-get employee 'salary' 'isInvalid')}}
+		<div class="error">
+			Salary <strong>{{employee.salary}}</strong> is invalid.
+		</div>
+		{{/if}}
+	</div>
+	<div class="form-group">
+		<label>Company:</label>
+		{{input type="text" class="form-control" readonly="true" value=employee.company_name placeholder="Company"}}
+	</div>
+	{{#if (eq action "edit")}}  
+	<button {{action 'updateEmployee' employee.id}} class="btn btn-primary"  disabled={{v-get employee 'isInvalid'}}>Update</button>
+	{{/if}}
+	{{#link-to 'employees' company class='btn btn-light'}}Close{{/link-to}}
+</form>
+
+
+
+
+
+
+
+
+
+
+
+

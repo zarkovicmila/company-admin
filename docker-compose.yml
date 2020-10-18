@@ -1,0 +1,46 @@
+version: '3'
+services:
+  mysqldb:
+    image: 'mysql:5.7'
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=company
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    ports:
+    - '3306:3306'
+  nginx:
+    depends_on: 
+      - api
+      - client
+    restart: always
+    build: 
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - '8080:80'
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    environment:
+      - DATABASE_HOST=mysqldb
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=root
+      - DATABASE_NAME=company
+      - DATABASE_PORT=3306
+    ports: 
+      - '8081:8081'
+    depends_on:
+      - mysqldb
+  client:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+    - /app/node_modules
+    - ./client:/app
+  
+
