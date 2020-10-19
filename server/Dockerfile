@@ -1,9 +1,20 @@
-FROM adoptopenjdk/openjdk11:alpine-jre
+# Step : Build with Maven Image
+FROM maven:3-adoptopenjdk-11 as target
 
-ARG JAR_FILE=target/company-admin.jar
+WORKDIR /build
 
-WORKDIR /app
+COPY pom.xml .
 
-COPY ${JAR_FILE} app.jar
+# Install plugin to cache deps
+RUN mvn dependency:go-offline
 
-CMD ["java","-jar","app.jar"]
+COPY src/ /build/src/
+
+RUN mvn package -DskipTests
+
+# Step : Run with JRE Image
+FROM adoptopenjdk/openjdk11:jre-11.0.8_10-alpine
+
+COPY --from=target /build/target/company-admin.jar /app/my-app.jar
+
+CMD exec java $JAVA_OPTS -jar /app/my-app.jar

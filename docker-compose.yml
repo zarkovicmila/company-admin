@@ -10,19 +10,8 @@ services:
       - MYSQL_PASSWORD=root
     ports:
     - '3306:3306'
-  nginx:
-    depends_on: 
-      - api
-      - client
-    restart: always
-    build: 
-      dockerfile: Dockerfile
-      context: ./nginx
-    ports:
-      - '8080:80'
   api:
     build:
-      dockerfile: Dockerfile
       context: ./server
     environment:
       - DATABASE_HOST=mysqldb
@@ -35,10 +24,10 @@ services:
     depends_on:
       - mysqldb
   client:
-    stdin_open: true
     build:
-      dockerfile: Dockerfile
       context: ./client
+    ports: 
+      - '8080:4200'
     volumes:
     - /app/node_modules
     - ./client:/app
